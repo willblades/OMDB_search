@@ -1,0 +1,45 @@
+<div class="background">
+  <router-outlet></router-outlet>
+  <mat-toolbar>
+    <div class="box" style="position: relative;left: 5%;">
+      <h1>Online Movies Database Query Demo</h1>
+    </div>
+    <div class="box" style="position: relative;left: 20%;">
+      <input class="box" style="position: relative;left: 50%;" type="text" #searchText class="form-control" placeholder="Search a movie" />
+    </div>
+  </mat-toolbar>
+  <div class="box" style="margin: 50px; position: relative;left: 5%;" >
+    <div class="container" style="text-align:center">
+      <div class="row" *ngIf="searchFlag">
+        <div class="col-12 text-center">
+          <h4>Searching ... </h4>
+        </div>
+      </div>
+      <div class="row">
+        <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
+        <div class=ex1 style="position: relative;left: 10%;">
+          <div class="col-12 text-center" >
+            <div class="alert" role="alert" >
+              {{apiResponse['Error']}}
+            </div>
+          </div>
+        </div>  
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="col-3" *ngFor="let movie of apiResponse['Search']">
+            <div class="card" style="margin:5px;">
+              <img class="card-img-top" src="{{movie['Poster']}}">
+              <mat-card>
+                <div class="card-body">
+                  <h1 class="card-title">{{movie['Title']}}</h1>
+                  <p class="card-text">Year: {{movie['Year']}}</p>
+                  <button mat-raised-button color="primary" (click)="queryMovieInfo(this.movie)">This button does nothing</button>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  </div>
